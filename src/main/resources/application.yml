@@ -31,6 +31,16 @@ spring:
       # Fail startup if the topic cannot be created/verified instead of running half-configured
       fail-fast: true
 
+management:
+  endpoints:
+    web:
+      exposure:
+        # Scraped by Prometheus (infra/monitoring in cbar-integration-hub)
+        include: health,info,prometheus
+  metrics:
+    tags:
+      application: ${spring.application.name}
+
 app:
   kafka:
     topic:
