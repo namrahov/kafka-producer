@@ -7,6 +7,13 @@ spring:
   kafka:
     # Hostnames resolve to the static lab IPs (Windows hosts file)
     bootstrap-servers: kafka-1:9092,kafka-2:9092,kafka-3:9092
+    # Applies to producer and admin clients alike. Account cbar-producer may write to (and create)
+    # any topic - see the broker ACLs. Lab only: the password is kept here in plain text.
+    security:
+      protocol: SASL_PLAINTEXT
+    properties:
+      sasl.mechanism: SCRAM-SHA-512
+      sasl.jaas.config: org.apache.kafka.common.security.scram.ScramLoginModule required username="cbar-producer" password="zzCAiJdarfjrTeswTKbiBP6h";
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
